@@ -1,17 +1,9 @@
-export function TaskList() {
+import { Task } from "../task/task";
+
+export function TaskList(props) {
     return (
         <ul class="todo-list">
-            <li class="completed">
-                <div class="view">
-                    <input class="toggle" type="checkbox" />
-                    <label>
-                        <span class="description">Completed task</span>
-                        <span class="created">created 17 seconds ago</span>
-                    </label>
-                    <button class="icon icon-edit"></button>
-                    <button class="icon icon-destroy"></button>
-                </div>
-            </li>
+            <Task task={props.list[0]} />
             <li class="editing">
                 <div class="view">
                     <input class="toggle" type="checkbox" />
