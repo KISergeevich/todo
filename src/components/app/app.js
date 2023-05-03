@@ -2,6 +2,8 @@ import React from 'react';
 import { Header } from '../header/header';
 import { TaskList } from '../task-list/task-list';
 import { Footer } from '../footer/footer';
+import './app.css';
+
 
 export class App extends React.Component {
 
