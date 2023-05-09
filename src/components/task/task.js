@@ -5,15 +5,8 @@ import './task.css';
 
 export class Task extends Component {
 
-    state = {
-        completed: this.props.task.completed
-    }
-
-    clickOnCheckbox() {
-        this.setState((state) => ({
-            ...state,
-            completed: !state.completed
-        }));
+    onChange() {
+        this.props.onChange(this.props.task);
     }
 
     onDelete() {
@@ -23,9 +16,9 @@ export class Task extends Component {
     render() {
         const { task } = this.props;
         return (
-            <li className={this.state.completed ? 'completed' : ''}>
+            <li className={task.completed ? 'completed' : ''}>
                 <div class="view">
-                    <input class="toggle" type="checkbox" checked={this.state.completed} onChange={() => this.clickOnCheckbox()} />
+                    <input class="toggle" type="checkbox" checked={task.completed} onChange={() => this.onChange()} />
                     <label>
                         <span class="description">{task.name}</span>
                         <span class="created">{formatDistanceToNow(task.date, { addSuffix: true })}</span>

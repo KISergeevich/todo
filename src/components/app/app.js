@@ -34,13 +34,25 @@ export class App extends Component {
         }));
     }
 
+    onChange(task) {
+        this.setState((state) => ({
+            ...state,
+            list: state.list.map((item) => (item === task)
+                ? {
+                    ...item,
+                    completed: !item.completed
+                }
+                : item
+            )
+        }));
+    }
 
     render() {
         return (
             <section class="todoapp">
                 <Header />
                 <section class="main">
-                    <TaskList list={this.state.list} onDelete={(task) => this.onDelete(task)} />
+                    <TaskList list={this.state.list} onDelete={(task) => this.onDelete(task)} onChange={(task) => this.onChange(task)} />
                     <Footer />
                 </section>
             </section>
