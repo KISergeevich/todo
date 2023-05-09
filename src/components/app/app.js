@@ -49,9 +49,9 @@ export class App extends Component {
 
     render() {
         return (
-            <section class="todoapp">
+            <section className="todoapp">
                 <Header />
-                <section class="main">
+                <section className="main">
                     <TaskList list={this.state.list} onDelete={(task) => this.onDelete(task)} onChange={(task) => this.onChange(task)} />
                     <Footer />
                 </section>

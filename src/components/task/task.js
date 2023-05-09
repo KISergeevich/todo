@@ -17,14 +17,14 @@ export class Task extends Component {
         const { task } = this.props;
         return (
             <li className={task.completed ? 'completed' : ''}>
-                <div class="view">
-                    <input class="toggle" type="checkbox" checked={task.completed} onChange={() => this.onChange()} />
+                <div className="view">
+                    <input className="toggle" type="checkbox" checked={task.completed} onChange={() => this.onChange()} />
                     <label>
-                        <span class="description">{task.name}</span>
-                        <span class="created">{formatDistanceToNow(task.date, { addSuffix: true })}</span>
+                        <span className="description">{task.name}</span>
+                        <span className="created">{formatDistanceToNow(task.date, { addSuffix: true })}</span>
                     </label>
-                    <button class="icon icon-edit"></button>
-                    <button class="icon icon-destroy" onClick={() => this.onDelete()}></button>
+                    <button className="icon icon-edit"></button>
+                    <button className="icon icon-destroy" onClick={() => this.onDelete()}></button>
                 </div>
             </li>
         );

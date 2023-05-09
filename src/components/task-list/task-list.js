@@ -11,7 +11,7 @@ export function TaskList({ list, onDelete, onChange }) {
 
 
     return (
-        <ul class="todo-list">
+        <ul className="todo-list">
             {elements}
         </ul>
     );

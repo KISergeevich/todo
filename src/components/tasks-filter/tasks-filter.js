@@ -5,9 +5,9 @@ import React, { Component } from 'react';
 export class TasksFilter extends Component {
     render() {
         return (
-            <><ul class="filters">
+            <><ul className="filters">
                 <li>
-                    <button class="selected">All</button>
+                    <button className="selected">All</button>
                 </li>
                 <li>
                     <button>Active</button>
@@ -15,7 +15,7 @@ export class TasksFilter extends Component {
                 <li>
                     <button>Completed</button>
                 </li>
-            </ul><button class="clear-completed">Clear completed</button></>
+            </ul><button className="clear-completed">Clear completed</button></>
         );
     }
 }
