@@ -1,11 +1,11 @@
 import { Task } from "../task/task";
 import './task-list.css';
 
-export function TaskList({ list }) {
+export function TaskList({ list, onDelete }) {
 
     const elements = list.map((task) => {
         return (
-            <Task task={task} />
+            <Task key={task.date.toString()} task={task} onDelete={(task) => onDelete(task)} />
         );
     })
 

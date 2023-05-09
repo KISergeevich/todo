@@ -16,6 +16,10 @@ export class Task extends Component {
         }));
     }
 
+    onDelete() {
+        this.props.onDelete(this.props.task);
+    }
+
     render() {
         const { task } = this.props;
         return (
@@ -27,7 +31,7 @@ export class Task extends Component {
                         <span class="created">{formatDistanceToNow(task.date, { addSuffix: true })}</span>
                     </label>
                     <button class="icon icon-edit"></button>
-                    <button class="icon icon-destroy"></button>
+                    <button class="icon icon-destroy" onClick={() => this.onDelete()}></button>
                 </div>
             </li>
         );
