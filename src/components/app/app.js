@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Header } from '../header/header';
 import { TaskList } from '../task-list/task-list';
 import { Footer } from '../footer/footer';
 import './app.css';
 
 
-export class App extends React.Component {
+export class App extends Component {
 
-    list = [
+    state = [
         {
             name: "Completed Task",
             date: new Date('2023-05-02 17:46'),
@@ -30,7 +30,7 @@ export class App extends React.Component {
             <section class="todoapp">
                 <Header />
                 <section class="main">
-                    <TaskList list={this.list} />
+                    <TaskList list={this.state} />
                     <Footer />
                 </section>
             </section>
