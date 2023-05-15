@@ -27,7 +27,8 @@ export class App extends Component {
     state = {
         list: this.filterFunction(abb, "All"),
         filter: "All",
-        rawList: abb
+        rawList: abb,
+        count: this.filterFunction(abb, "Active").length
     };
 
     createToDoItem(inputValue) {
@@ -61,7 +62,8 @@ export class App extends Component {
             return {
                 ...state,
                 rawList: newArr,
-                list: this.filterFunction(newArr, state.filter)
+                list: this.filterFunction(newArr, state.filter),
+                count: this.filterFunction(newArr, "Active").length
             };
         });
     }
@@ -78,7 +80,8 @@ export class App extends Component {
             return {
                 ...state,
                 rawList: newArr,
-                list: this.filterFunction(newArr, state.filter)
+                list: this.filterFunction(newArr, state.filter),
+                count: this.filterFunction(newArr, "Active").length
             }
         });
     }
@@ -105,6 +108,7 @@ export class App extends Component {
         });
     }
 
+
     render() {
         return (
             <section className="todoapp">
@@ -115,7 +119,8 @@ export class App extends Component {
                         onDelete={(task) => this.onDelete(task)}
                         onChange={(task) => this.onChange(task)} />
                     <Footer filter={this.state.filter}
-                        onFilterChange={(filterValue) => this.onFilterChange(filterValue)} />
+                        onFilterChange={(filterValue) => this.onFilterChange(filterValue)}
+                        count={this.state.count} />
                 </section>
             </section>
         );
