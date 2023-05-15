@@ -9,6 +9,7 @@ export class App extends Component {
 
     state = {
         list: [
+            this.createToDoItem("Completed Task"),
             {
                 name: "Completed Task",
                 date: new Date('2023-05-02 17:46'),
@@ -26,6 +27,29 @@ export class App extends Component {
             }
         ]
     };
+
+    createToDoItem(inputValue) {
+        return (
+            {
+                name: inputValue,
+                date: new Date(),
+                completed: false
+            }
+        )
+    }
+
+    addItem(inputValue) {
+        const newItem = this.createToDoItem(inputValue);
+        this.setState(({ list }) => {
+            const newArr = [
+                ...list,
+                newItem
+            ];
+            return {
+                list: newArr
+            };
+        });
+    }
 
     onDelete(task) {
         this.setState((state) => ({
@@ -50,7 +74,8 @@ export class App extends Component {
     render() {
         return (
             <section className="todoapp">
-                <Header />
+                <Header list={this.state.list}
+                    onInputChange={(inputValue) => this.addItem(inputValue)} />
                 <section className="main">
                     <TaskList list={this.state.list} onDelete={(task) => this.onDelete(task)} onChange={(task) => this.onChange(task)} />
                     <Footer />
