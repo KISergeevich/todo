@@ -7,6 +7,10 @@ export class TasksFilter extends Component {
         this.props.onChange(filterValue);
     }
 
+    clearComplete() {
+        this.props.clearComplete();
+    }
+
     render() {
         return (
             <><ul className="filters">
@@ -28,7 +32,10 @@ export class TasksFilter extends Component {
                         Completed
                     </button>
                 </li>
-            </ul > <button className="clear-completed">Clear completed</button></>
+            </ul > <button className="clear-completed"
+                onClick={() => this.clearComplete()}>
+                    Clear completed
+                </button></>
         );
     }
 }

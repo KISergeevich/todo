@@ -108,6 +108,16 @@ export class App extends Component {
         });
     }
 
+    clearComplete() {
+        this.setState((state) => {
+            const newArr = this.state.rawList.filter((item) => item.completed === false);
+            return {
+                ...state,
+                rawList: newArr,
+                list: this.filterFunction(newArr, state.filter)
+            }
+        })
+    }
 
     render() {
         return (
@@ -120,7 +130,9 @@ export class App extends Component {
                         onChange={(task) => this.onChange(task)} />
                     <Footer filter={this.state.filter}
                         onFilterChange={(filterValue) => this.onFilterChange(filterValue)}
-                        count={this.state.count} />
+                        count={this.state.count}
+                        clearComplete={() => this.clearComplete()}
+                        key={this.state.list.date} />
                 </section>
             </section>
         );
