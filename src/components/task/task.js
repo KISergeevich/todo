@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import { formatDistanceToNow } from "date-fns";
 import './task.css';
-
+import PropTypes from 'prop-types';
 
 export class Task extends Component {
+
+    static defaultProps = {
+        onChange: () => { },
+        onDelete: () => { },
+        task: {}
+    }
+
+    static propTypes = {
+        onChange: PropTypes.func,
+        onDelete: PropTypes.func,
+        task: PropTypes.object
+    }
 
     onChange() {
         this.props.onChange(this.props.task);

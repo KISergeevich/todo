@@ -1,5 +1,5 @@
 import { NewTaskForm } from "../new-task-form/new-task-form";
-
+import PropTypes from 'prop-types';
 
 export function Header({ list, onInputChange }) {
     return (
@@ -11,3 +11,12 @@ export function Header({ list, onInputChange }) {
     );
 }
 
+Header.propTypes = {
+    list: PropTypes.array,
+    onInputChange: PropTypes.func
+}
+
+Header.defaultProps = {
+    list: [],
+    onInputChange: () => { }
+}

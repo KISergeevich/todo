@@ -1,4 +1,5 @@
 import { TasksFilter } from "../tasks-filter/tasks-filter";
+import PropTypes from 'prop-types';
 import './footer.css';
 
 export function Footer({ filter, onFilterChange, count, clearComplete, key }) {
@@ -11,4 +12,20 @@ export function Footer({ filter, onFilterChange, count, clearComplete, key }) {
                 key={key} />
         </footer>
     );
+}
+
+Footer.defaultProps = {
+    filter: "All",
+    onFilterChange: () => { },
+    count: 0,
+    clearComplete: () => { },
+    key: new Date()
+}
+
+Footer.propTypes = {
+    filter: PropTypes.string,
+    onFilterChange: PropTypes.func,
+    count: PropTypes.number,
+    clearComplete: PropTypes.func,
+    key: PropTypes.object
 }

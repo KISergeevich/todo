@@ -1,5 +1,7 @@
 import { Task } from "../task/task";
 import './task-list.css';
+import PropTypes from 'prop-types';
+
 
 export function TaskList({ list, onDelete, onChange }) {
 
@@ -19,4 +21,16 @@ export function TaskList({ list, onDelete, onChange }) {
             {elements}
         </ul>
     );
+}
+
+TaskList.propTypes = {
+    list: PropTypes.array,
+    onDelete: PropTypes.func,
+    onChange: PropTypes.func
+}
+
+TaskList.defaultProps = {
+    list: [],
+    onChange: () => { },
+    onDelete: () => { }
 }

@@ -123,16 +123,19 @@ export class App extends Component {
         return (
             <section className="todoapp">
                 <Header list={this.state.list}
-                    onInputChange={(inputValue) => this.addItem(inputValue)} />
+                    onInputChange={(inputValue) => this.addItem(inputValue)}
+                />
                 <section className="main">
                     <TaskList list={this.state.list}
                         onDelete={(task) => this.onDelete(task)}
-                        onChange={(task) => this.onChange(task)} />
+                        onChange={(task) => this.onChange(task)}
+                    />
                     <Footer filter={this.state.filter}
                         onFilterChange={(filterValue) => this.onFilterChange(filterValue)}
                         count={this.state.count}
                         clearComplete={() => this.clearComplete()}
-                        key={this.state.list.date} />
+                        key={this.state.list.date}
+                    />
                 </section>
             </section>
         );

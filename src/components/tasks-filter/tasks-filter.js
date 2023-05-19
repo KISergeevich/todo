@@ -1,8 +1,19 @@
 import './tasks-filter.css';
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 
 export class TasksFilter extends Component {
+
+    static defaultProps = {
+        onChange: () => { },
+        clearComplete: () => { },
+    }
+
+    static propTypes = {
+        onChange: PropTypes.func,
+        clearComplete: PropTypes.func
+    }
+
     onClick(filterValue) {
         this.props.onChange(filterValue);
     }
