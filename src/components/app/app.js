@@ -4,23 +4,7 @@ import { TaskList } from '../task-list/task-list';
 import { Footer } from '../footer/footer';
 import './app.css';
 
-const abb = [
-    {
-        name: "Completed Task",
-        date: new Date('2023-05-02 17:46'),
-        completed: true
-    },
-    {
-        name: "Editing Task",
-        date: new Date('2023-05-02 09:46'),
-        completed: false
-    },
-    {
-        name: "Active Task",
-        date: new Date('2023-05-02 13:46'),
-        completed: false
-    }
-]
+const abb = [];
 
 export class App extends Component {
 
