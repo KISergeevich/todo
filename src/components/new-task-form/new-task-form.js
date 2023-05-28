@@ -1,44 +1,47 @@
-import React, { Component } from 'react';
-import './new-task-form.css';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import './new-task-form.css'
+import PropTypes from 'prop-types'
 
-export class NewTaskForm extends Component {
-
-    static defaultProps = {
-        list: [],
-        onInputChange: () => { }
+export default class NewTaskForm extends Component {
+  constructor() {
+    super()
+    this.state = {
+      value: '',
     }
+  }
 
-    static propTypes = {
-        list: PropTypes.array,
-        onInputChange: PropTypes.func
-    }
+  onSubmit(e) {
+    e.preventDefault()
+    const { onInputChange } = this.props
+    const { value } = this.state
+    onInputChange(value)
+    this.setState({ value: '' })
+  }
 
-    state = {
-        value: ''
-    }
+  onInputChange(e) {
+    this.setState({ value: e.target.value })
+  }
 
-    onSubmit(e) {
-        e.preventDefault();
-        this.props.onInputChange(this.state.value);
-        this.setState({ value: '' });
-    }
+  render() {
+    const { value } = this.state
+    return (
+      <form className="form-class" onSubmit={(e) => this.onSubmit(e)}>
+        <input
+          className="new-todo"
+          type="text"
+          placeholder="What needs to be done?"
+          value={value}
+          onChange={(e) => this.onInputChange(e)}
+        />
+      </form>
+    )
+  }
+}
 
-    onInputChange(e) {
-        this.setState({ value: e.target.value })
-    }
+NewTaskForm.defaultProps = {
+  onInputChange: () => {},
+}
 
-    render() {
-        return (
-            <form className="form-class"
-                onSubmit={(e) => this.onSubmit(e)}>
-                <input className="new-todo"
-                    type='text'
-                    placeholder="What needs to be done?"
-                    autoFocus
-                    value={this.state.value}
-                    onChange={(e) => this.onInputChange(e)} />
-            </form>
-        )
-    }
+NewTaskForm.propTypes = {
+  onInputChange: PropTypes.func,
 }

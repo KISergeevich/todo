@@ -10,17 +10,24 @@
     ],
     "extends": [
         "eslint:recommended",
+        "airbnb",
+        "airbnb/hooks",
+        "prettier",
         "plugin:react/recommended",
         "plugin:prettier/recommended",
         "plugin:import/errors",
         "plugin:import/warnings"
     ],
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
         "ecmaVersion": 12,
-        "sourceType": "module"
+        "sourceType": "module",
+        "babelOptions": {
+            "presets": ["@babel/preset-react"]
+        }
     },
     "plugins": [
         "react",

@@ -1,36 +1,38 @@
-import { Task } from "../task/task";
-import './task-list.css';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
+import Task from '../task/task'
 
-export function TaskList({ list, onDelete, onChange }) {
+import './task-list.css'
 
-    const elements = list.map((task) => {
-        return (
-            <Task key={task.date.toString()}
-                task={task}
-                onDelete={(task) => onDelete(task)}
-                onChange={(task) => onChange(task)}
-            />
-        );
-    })
-
-
+export default function TaskList({ list, onDelete, onChange }) {
+  const elements = list.map((task) => {
     return (
-        <ul className="todo-list">
-            {elements}
-        </ul>
-    );
+      <Task
+        key={task.date.toString()}
+        task={task}
+        onDelete={(taskToDelete) => onDelete(taskToDelete)}
+        onChange={(taskToChange) => onChange(taskToChange)}
+      />
+    )
+  })
+
+  return <ul className="todo-list">{elements}</ul>
 }
 
 TaskList.propTypes = {
-    list: PropTypes.array,
-    onDelete: PropTypes.func,
-    onChange: PropTypes.func
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      date: PropTypes.instanceOf(Date),
+      completed: PropTypes.bool,
+    })
+  ),
+  onDelete: PropTypes.func,
+  onChange: PropTypes.func,
 }
 
 TaskList.defaultProps = {
-    list: [],
-    onChange: () => { },
-    onDelete: () => { }
+  list: [],
+  onChange: () => {},
+  onDelete: () => {},
 }
