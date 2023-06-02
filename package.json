@@ -21,7 +21,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js",
     "lint:fix": "eslint src --fix --ext .js",
-    "prettier": "prettier --write src/**/*.js"
+    "prettier": "prettier --write src/**/*.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -46,6 +47,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
     "prettier": "2.8.8"
   },
   "eslintConfig": {
@@ -54,5 +57,8 @@
       "react-app/jest"
     ]
   },
-  "parser": "@babel/eslint-parser"
+  "parser": "@babel/eslint-parser",
+  "lint-staged": {
+    "*.{js,jsx}": "eslint --fix"
+  }
 }
