@@ -16,17 +16,18 @@ export default class Task extends Component {
 
   render() {
     const { task } = this.props
+    const { date } = task
     return (
       <li className={task.completed ? 'completed' : ''}>
         <div className="view">
           <input
-            id="label"
+            id={date.toString()}
             className="toggle"
             type="checkbox"
             checked={task.completed}
             onChange={() => this.onChange()}
           />
-          <label htmlFor="label">
+          <label htmlFor={date.toString()}>
             <span className="description">{task.name}</span>
             <span className="created">{formatDistanceToNow(task.date, { addSuffix: true })}</span>
           </label>
