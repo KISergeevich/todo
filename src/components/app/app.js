@@ -13,82 +13,72 @@ export default class App extends Component {
     this.state = {
       list: [],
       filter: 'All',
-      rawList: [],
       count: 0,
     }
   }
 
   onDelete(task) {
-    this.setState((state) => {
-      const newArr = state.rawList.filter((item) => item !== task)
-      return {
-        ...state,
-        rawList: newArr,
-        list: filterFunction(newArr, state.filter),
-        count: filterFunction(newArr, 'Active').length,
-      }
-    })
+    const { list } = this.state
+    const newArr = list.filter((item) => item !== task)
+    this.setList(newArr)
   }
 
   onChange(task) {
-    this.setState((state) => {
-      const newArr = state.rawList.map((item) => {
-        if (item === task) {
-          return {
-            ...item,
-            completed: !item.completed,
-          }
+    const { list } = this.state
+    const newArr = list.map((item) => {
+      if (item === task) {
+        return {
+          ...item,
+          completed: !item.completed,
         }
-        return item
-      })
-      return {
-        ...state,
-        rawList: newArr,
-        list: filterFunction(newArr, state.filter),
-        count: filterFunction(newArr, 'Active').length,
       }
+      return item
     })
+    this.setList(newArr)
   }
 
   onFilterChange(filterValue) {
     this.setState((state) => ({
       ...state,
-      list: filterFunction(state.rawList, filterValue),
       filter: filterValue,
     }))
   }
 
-  addItem(inputValue) {
-    const newItem = createToDoItem(inputValue)
+  setList(list) {
     this.setState((state) => {
-      const newArr = [...state.rawList, newItem]
       return {
         ...state,
-        rawList: newArr,
-        list: filterFunction(newArr, state.filter),
-        count: filterFunction(newArr, 'Active').length,
+        list,
+        count: filterFunction(list, 'Active').length,
       }
     })
   }
 
+  addItem(inputValue) {
+    const newItem = createToDoItem(inputValue)
+    const { list } = this.state
+    const newArr = [...list, newItem]
+    this.setList(newArr)
+  }
+
   clearComplete() {
-    this.setState((state) => {
-      const newArr = state.rawList.filter((item) => item.completed === false)
-      return {
-        ...state,
-        rawList: newArr,
-        list: filterFunction(newArr, state.filter),
-      }
-    })
+    const { list } = this.state
+    const newArr = list.filter((item) => item.completed === false)
+    this.setList(newArr)
   }
 
   render() {
     const { count, filter, list } = this.state
+    const filteredlist = filterFunction(list, filter)
     return (
       <section className="todoapp">
-        <Header list={list} onInputChange={(inputValue) => this.addItem(inputValue)} />
+        <Header onInputChange={(inputValue) => this.addItem(inputValue)} />
         <section className="main">
-          <TaskList list={list} onDelete={(task) => this.onDelete(task)} onChange={(task) => this.onChange(task)} />
+          <TaskList
+            list={filteredlist}
+            onDelete={(task) => this.onDelete(task)}
+            onChange={(task) => this.onChange(task)}
+          />
           <Footer
             filter={filter}
             onFilterChange={(filterValue) => this.onFilterChange(filterValue)}
