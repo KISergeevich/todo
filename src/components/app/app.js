@@ -1,32 +1,11 @@
 import React, { Component } from 'react'
 
+import createToDoItem from '../utils/create-todo-item'
+import filterFunction from '../utils/filter-function'
 import Header from '../header/header'
 import TaskList from '../task-list/task-list'
 import Footer from '../footer/footer'
 import './app.css'
-
-function filterFunction(arr, filterValue) {
-  return arr.filter((item) => {
-    if (filterValue === 'All') {
-      return true
-    }
-    if (filterValue === 'Active') {
-      return !item.completed
-    }
-    if (filterValue === 'Completed') {
-      return item.completed
-    }
-    return false
-  })
-}
-
-function createToDoItem(inputValue) {
-  return {
-    name: inputValue,
-    date: new Date(),
-    completed: false,
-  }
-}
 
 export default class App extends Component {
   constructor() {
