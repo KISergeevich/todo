@@ -5,8 +5,6 @@ import TaskList from '../task-list/task-list'
 import Footer from '../footer/footer'
 import './app.css'
 
-const abb = []
-
 function filterFunction(arr, filterValue) {
   return arr.filter((item) => {
     if (filterValue === 'All') {
@@ -34,10 +32,10 @@ export default class App extends Component {
   constructor() {
     super()
     this.state = {
-      list: filterFunction(abb, 'All'),
+      list: [],
       filter: 'All',
-      rawList: abb,
-      count: filterFunction(abb, 'Active').length,
+      rawList: [],
+      count: 0,
     }
   }
 
@@ -89,6 +87,7 @@ export default class App extends Component {
         ...state,
         rawList: newArr,
         list: filterFunction(newArr, state.filter),
+        count: filterFunction(newArr, 'Active').length,
       }
     })
   }
