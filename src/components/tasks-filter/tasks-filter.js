@@ -1,6 +1,7 @@
 import './tasks-filter.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 export default class TasksFilter extends Component {
   onClick(filterValue) {
@@ -19,14 +20,18 @@ export default class TasksFilter extends Component {
       <>
         <ul className="filters">
           <li>
-            <button type="button" className={filter === 'All' ? 'selected' : ''} onClick={() => this.onClick('All')}>
+            <button
+              type="button"
+              className={classNames({ selected: filter === 'All' })}
+              onClick={() => this.onClick('All')}
+            >
               All
             </button>
           </li>
           <li>
             <button
               type="button"
-              className={filter === 'Active' ? 'selected' : ''}
+              className={classNames({ selected: filter === 'Active' })}
               onClick={() => this.onClick('Active')}
             >
               Active
@@ -35,7 +40,7 @@ export default class TasksFilter extends Component {
           <li>
             <button
               type="button"
-              className={filter === 'Completed' ? 'selected' : ''}
+              className={classNames({ selected: filter === 'Completed' })}
               onClick={() => this.onClick('Completed')}
             >
               Completed
