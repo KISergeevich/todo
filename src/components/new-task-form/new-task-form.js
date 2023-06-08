@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import './new-task-form.css'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
 export default class NewTaskForm extends Component {
   constructor() {
     super()
     this.state = {
       value: '',
-      dirty: false,
     }
   }
 
@@ -18,20 +16,21 @@ export default class NewTaskForm extends Component {
     const { value } = this.state
     if (value.trim() !== '') {
       onInputChange(value.trim())
-      this.setState({ value: '', dirty: false })
+      this.setState({ value: '' })
     }
   }
 
   onInputChange(e) {
-    this.setState({ value: e.target.value, dirty: true })
+    this.setState({ value: e.target.value })
   }
 
   render() {
-    const { value, dirty } = this.state
+    const { value } = this.state
     return (
       <form className="form-class" onSubmit={(e) => this.onSubmit(e)}>
         <input
-          className={classNames('new-todo', { 'new-todo--alarm': value.trim() === '' && dirty })}
+          className="new-todo"
+          required
           type="text"
           placeholder="What needs to be done?"
           value={value}
