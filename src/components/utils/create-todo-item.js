@@ -3,5 +3,6 @@ export default function createToDoItem(inputValue) {
     name: inputValue,
     date: new Date(),
     completed: false,
+    spent: new Date(0),
   }
 }

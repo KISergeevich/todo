@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow, format } from 'date-fns'
 import './task.css'
 import PropTypes from 'prop-types'
 
@@ -16,7 +16,7 @@ export default class Task extends Component {
 
   render() {
     const { task } = this.props
-    const { date } = task
+    const { date, spent } = task
     return (
       <li className={task.completed ? 'completed' : ''}>
         <div className="view">
@@ -29,6 +29,7 @@ export default class Task extends Component {
           />
           <label htmlFor={date.toString()}>
             <span className="description">{task.name}</span>
+            <span className="spent">{format(spent, 'mm:ss')}</span>
             <span className="created">{formatDistanceToNow(task.date, { addSuffix: true })}</span>
           </label>
           <button type="button" aria-label="edit" className="icon icon-edit" />
@@ -36,20 +37,6 @@ export default class Task extends Component {
         </div>
       </li>
     )
-    // return (
-    //     <li class="editing">
-    //             <div class="view">
-    //                 <input class="toggle" type="checkbox" />
-    //                 <label>
-    //                     <span class="description">Editing task</span>
-    //                     <span class="created">created 5 minutes ago</span>
-    //                 </label>
-    //                 <button class="icon icon-edit"></button>
-    //                 <button class="icon icon-destroy"></button>
-    //             </div>
-    //             <input type="text" class="edit" value="Editing task" />
-    //         </li>
-    // );
   }
 }
 
