@@ -6,45 +6,83 @@ export default class NewTaskForm extends Component {
   constructor() {
     super()
     this.state = {
-      value: '',
+      name: '',
+      min: '',
+      sec: '',
     }
   }
 
   onSubmit(e) {
     e.preventDefault()
-    const { onInputChange } = this.props
-    const { value } = this.state
-    if (value.trim() !== '') {
-      onInputChange(value.trim())
-      this.setState({ value: '' })
+    const { onNewToDo } = this.props
+    const { name, min, sec } = this.state
+    if (name.trim() !== '' && !Number.isNaN(Number(min)) && !Number.isNaN(Number(sec))) {
+      onNewToDo(name.trim(), Number(min), Number(sec))
+      this.setState({ name: '', min: '', sec: '' })
     }
   }
 
   onInputChange(e) {
-    this.setState({ value: e.target.value })
+    this.setState((state) => ({
+      ...state,
+      name: e.target.value,
+    }))
+  }
+
+  onInputChangeMin(e) {
+    this.setState((state) => ({
+      ...state,
+      min: e.target.value,
+    }))
+  }
+
+  onInputChangeSec(e) {
+    this.setState((state) => ({
+      ...state,
+      sec: e.target.value,
+    }))
   }
 
   render() {
-    const { value } = this.state
+    const { name, min, sec } = this.state
     return (
-      <form className="form-class" onSubmit={(e) => this.onSubmit(e)}>
+      <form className="new-todo-form" onSubmit={(e) => this.onSubmit(e)}>
         <input
           className="new-todo"
           required
           type="text"
-          placeholder="What needs to be done?"
-          value={value}
+          placeholder="Task"
+          value={name}
           onChange={(e) => this.onInputChange(e)}
         />
+        <input
+          className="new-todo-form__timer"
+          required
+          type="text"
+          placeholder="Min"
+          value={min}
+          onChange={(e) => this.onInputChangeMin(e)}
+        />
+        <input
+          className="new-todo-form__timer"
+          required
+          type="text"
+          placeholder="Sec"
+          value={sec}
+          onChange={(e) => this.onInputChangeSec(e)}
+        />
+        <button type="submit" className="button-new-form">
+          создать
+        </button>
       </form>
     )
   }
 }
 
 NewTaskForm.defaultProps = {
-  onInputChange: () => {},
+  onNewToDo: () => {},
 }
 
 NewTaskForm.propTypes = {
-  onInputChange: PropTypes.func,
+  onNewToDo: PropTypes.func,
 }

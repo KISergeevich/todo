@@ -1,8 +1,9 @@
-export default function createToDoItem(inputValue) {
+export default function createToDoItem(name, rest) {
   return {
-    name: inputValue,
+    name,
     date: new Date(),
     completed: false,
-    spent: new Date(0),
+    rest,
+    isStarted: false,
   }
 }

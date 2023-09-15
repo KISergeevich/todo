@@ -4,14 +4,16 @@ import Task from '../task/task'
 
 import './task-list.css'
 
-export default function TaskList({ list, onDelete, onChange }) {
+export default function TaskList({ list, onDelete, onCompletedChange, onPlay, onPause }) {
   const elements = list.map((task) => {
     return (
       <Task
         key={task.date.toString()}
         task={task}
         onDelete={(taskToDelete) => onDelete(taskToDelete)}
-        onChange={(taskToChange) => onChange(taskToChange)}
+        onCompletedChange={(taskToChange) => onCompletedChange(taskToChange)}
+        onPlay={(updateTask) => onPlay(updateTask)}
+        onPause={(updateTask) => onPause(updateTask)}
       />
     )
   })
@@ -28,11 +30,11 @@ TaskList.propTypes = {
     })
   ),
   onDelete: PropTypes.func,
-  onChange: PropTypes.func,
+  onCompletedChange: PropTypes.func,
 }
 
 TaskList.defaultProps = {
   list: [],
-  onChange: () => {},
+  onCompletedChange: () => {},
   onDelete: () => {},
 }

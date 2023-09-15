@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { isBefore, addSeconds } from 'date-fns'
 
 import createToDoItem from '../utils/create-todo-item'
 import filterFunction from '../utils/filter-function'
@@ -17,13 +18,72 @@ export default class App extends Component {
     }
   }
 
+  componentDidMount() {
+    this.timer = setInterval(() => this.onTick(), 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+
+  onTick() {
+    const { list } = this.state
+    const newArr = list.map((item) => {
+      if (item.isStarted) {
+        const newTime = addSeconds(item.rest, -1)
+        if (isBefore(newTime, new Date(0, 1, 0, 0, 0, 0, 0))) {
+          return {
+            ...item,
+            rest: new Date(0, 1, 0, 0, 0, 0, 0),
+            isStarted: false,
+            completed: true,
+          }
+        }
+        return {
+          ...item,
+          rest: newTime,
+        }
+      }
+      return item
+    })
+    this.setList(newArr)
+  }
+
+  onPlay(updateTask) {
+    const { list } = this.state
+    const newArr = list.map((item) => {
+      if (item === updateTask) {
+        return {
+          ...item,
+          isStarted: true,
+        }
+      }
+      return item
+    })
+    this.setList(newArr)
+  }
+
+  onPause(updateTask) {
+    const { list } = this.state
+    const newArr = list.map((item) => {
+      if (item === updateTask) {
+        return {
+          ...item,
+          isStarted: false,
+        }
+      }
+      return item
+    })
+    this.setList(newArr)
+  }
+
   onDelete(task) {
     const { list } = this.state
     const newArr = list.filter((item) => item !== task)
     this.setList(newArr)
   }
 
-  onChange(task) {
+  onCompletedChange(task) {
     const { list } = this.state
     const newArr = list.map((item) => {
       if (item === task) {
@@ -54,8 +114,9 @@ export default class App extends Component {
     })
   }
 
-  addItem(inputValue) {
-    const newItem = createToDoItem(inputValue)
+  addItem(name, min, sec) {
+    const rest = new Date(0, 1, 0, 0, min, sec, 0)
+    const newItem = createToDoItem(name, rest)
     const { list } = this.state
     const newArr = [...list, newItem]
     this.setList(newArr)
@@ -72,12 +133,14 @@ export default class App extends Component {
     const filteredlist = filterFunction(list, filter)
     return (
       <section className="todoapp">
-        <Header onInputChange={(inputValue) => this.addItem(inputValue)} />
+        <Header onNewToDo={(name, min, sec) => this.addItem(name, min, sec)} />
         <section className="main">
           <TaskList
             list={filteredlist}
             onDelete={(task) => this.onDelete(task)}
-            onChange={(task) => this.onChange(task)}
+            onCompletedChange={(task) => this.onCompletedChange(task)}
+            onPlay={(updateTask) => this.onPlay(updateTask)}
+            onPause={(updateTask) => this.onPause(updateTask)}
           />
           <Footer
             filter={filter}
