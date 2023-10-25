@@ -1,6 +1,6 @@
-export default function pauseTask(updateTask, list) {
+export default function pauseTask(task, list) {
   return list.map((item) => {
-    if (item === updateTask) {
+    if (item === task) {
       return {
         ...item,
         isStarted: false,

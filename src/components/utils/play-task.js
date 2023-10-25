@@ -1,6 +1,6 @@
-export default function playTask(updateTask, list) {
+export default function playTask(task, list) {
   return list.map((item) => {
-    if (item === updateTask) {
+    if (item === task) {
       return {
         ...item,
         isStarted: true,
