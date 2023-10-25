@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import { isBefore, addSeconds } from 'date-fns'
+import React, { useState, useEffect } from 'react'
 
 import createToDoItem from '../utils/create-todo-item'
 import filterFunction from '../utils/filter-function'
@@ -7,150 +6,42 @@ import Header from '../header/header'
 import TaskList from '../task-list/task-list'
 import Footer from '../footer/footer'
 import './app.css'
+import useListAndCount from '../utils/use-list-and-count'
+import tick from '../utils/tick'
+import completeTask from '../utils/complete-task'
+import play from '../utils/play'
+import pause from '../utils/pause'
 
-export default class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      list: [],
-      filter: 'All',
-      count: 0,
+export default function App() {
+  const [filter, setFilter] = useState('All')
+  const { list, count, setList } = useListAndCount()
+  useEffect(() => {
+    const timer = setInterval(() => setList(tick(list)), 1000)
+    return () => {
+      clearInterval(timer)
     }
-  }
+  })
 
-  componentDidMount() {
-    this.timer = setInterval(() => this.onTick(), 1000)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer)
-  }
-
-  onTick() {
-    const { list } = this.state
-    const newArr = list.map((item) => {
-      if (item.isStarted) {
-        const newTime = addSeconds(item.rest, -1)
-        if (isBefore(newTime, new Date(0, 1, 0, 0, 0, 0, 0))) {
-          return {
-            ...item,
-            rest: new Date(0, 1, 0, 0, 0, 0, 0),
-            isStarted: false,
-            completed: true,
-          }
-        }
-        return {
-          ...item,
-          rest: newTime,
-        }
-      }
-      return item
-    })
-    this.setList(newArr)
-  }
-
-  onPlay(updateTask) {
-    const { list } = this.state
-    const newArr = list.map((item) => {
-      if (item === updateTask) {
-        return {
-          ...item,
-          isStarted: true,
-        }
-      }
-      return item
-    })
-    this.setList(newArr)
-  }
-
-  onPause(updateTask) {
-    const { list } = this.state
-    const newArr = list.map((item) => {
-      if (item === updateTask) {
-        return {
-          ...item,
-          isStarted: false,
-        }
-      }
-      return item
-    })
-    this.setList(newArr)
-  }
-
-  onDelete(task) {
-    const { list } = this.state
-    const newArr = list.filter((item) => item !== task)
-    this.setList(newArr)
-  }
-
-  onCompletedChange(task) {
-    const { list } = this.state
-    const newArr = list.map((item) => {
-      if (item === task) {
-        return {
-          ...item,
-          completed: !item.completed,
-        }
-      }
-      return item
-    })
-    this.setList(newArr)
-  }
-
-  onFilterChange(filterValue) {
-    this.setState((state) => ({
-      ...state,
-      filter: filterValue,
-    }))
-  }
-
-  setList(list) {
-    this.setState((state) => {
-      return {
-        ...state,
-        list,
-        count: filterFunction(list, 'Active').length,
-      }
-    })
-  }
-
-  addItem(name, min, sec) {
-    const rest = new Date(0, 1, 0, 0, min, sec, 0)
-    const newItem = createToDoItem(name, rest)
-    const { list } = this.state
-    const newArr = [...list, newItem]
-    this.setList(newArr)
-  }
-
-  clearComplete() {
-    const { list } = this.state
-    const newArr = list.filter((item) => item.completed === false)
-    this.setList(newArr)
-  }
-
-  render() {
-    const { count, filter, list } = this.state
-    const filteredlist = filterFunction(list, filter)
-    return (
-      <section className="todoapp">
-        <Header onNewToDo={(name, min, sec) => this.addItem(name, min, sec)} />
-        <section className="main">
-          <TaskList
-            list={filteredlist}
-            onDelete={(task) => this.onDelete(task)}
-            onCompletedChange={(task) => this.onCompletedChange(task)}
-            onPlay={(updateTask) => this.onPlay(updateTask)}
-            onPause={(updateTask) => this.onPause(updateTask)}
-          />
-          <Footer
-            filter={filter}
-            onFilterChange={(filterValue) => this.onFilterChange(filterValue)}
-            count={count}
-            clearComplete={() => this.clearComplete()}
-            key={list.date}
-          />
-        </section>
+  const filteredlist = filterFunction(list, filter)
+  return (
+    <section className="todoapp">
+      <Header onNewToDo={(name, min, sec) => setList([...list, createToDoItem(name, min, sec)])} />
+      <section className="main">
+        <TaskList
+          list={filteredlist}
+          onDelete={(task) => setList(list.filter((item) => item !== task))}
+          onCompletedChange={(task) => setList(completeTask(task, list))}
+          onPlay={(updateTask) => setList(play(updateTask, list))}
+          onPause={(updateTask) => setList(pause(updateTask, list))}
+        />
+        <Footer
+          filter={filter}
+          onFilterChange={(filterValue) => setFilter(filterValue)}
+          count={count}
+          clearComplete={() => setList(list.filter((item) => item.completed === false))}
+          key={list.date}
+        />
       </section>
-    )
-  }
+    </section>
+  )
 }
