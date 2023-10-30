@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 
-import completeTask from './complete-task'
-import pauseTask from './pause-task'
-import filterFunction from './filter-function'
-import createToDoItem from './create-todo-item'
-import playTask from './play-task'
-import tick from './tick'
+import completeTask from '../utils/complete-task'
+import pauseTask from '../utils/pause-task'
+import filterFunction from '../utils/filter-function'
+import createToDoItem from '../utils/create-todo-item'
+import playTask from '../utils/play-task'
+import tick from '../utils/tick'
 
 export default function useToDo() {
   const [list, setList] = useState([])
@@ -13,8 +13,8 @@ export default function useToDo() {
   const [count, setCount] = useState(0)
 
   const updateList = (newList) => {
-    setList(newList)
-    setCount(filterFunction(newList, 'Active').length)
+    setList(() => newList)
+    setCount(() => filterFunction(newList, 'Active').length)
   }
   const addNew = (name, min, sec) => updateList([...list, createToDoItem(name, min, sec)])
   const remove = (task) => updateList(list.filter((item) => item !== task))

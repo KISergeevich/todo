@@ -5,7 +5,7 @@ import Header from '../header/header'
 import TaskList from '../task-list/task-list'
 import Footer from '../footer/footer'
 import './app.css'
-import useToDo from '../utils/use-todo'
+import useToDo from '../hooks/use-todo'
 
 export default function App() {
   const { list, count, filter, setFilter, pause, addNew, remove, complete, play, clear } = useToDo()
